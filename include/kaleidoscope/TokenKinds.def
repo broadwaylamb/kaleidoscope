@@ -1,0 +1,90 @@
+//
+// Created by Sergej Jaskiewicz on 2019-05-28.
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file defines x-macros used for metaprogramming with lexer tokens.
+///
+/// TOKEN(name)
+///   KEYWORD(kw)
+///     DECL_KEYWORD(kw)
+///       STMT_KEYWORD(kw)
+///       EXPR_KEYWORD(kw)
+///   PUNCTUATOR(name, str)
+///   LITERAL(name)
+///   MISC(name)
+///
+//===----------------------------------------------------------------------===//
+
+/// TOKEN(name)
+///   Expands by default for every token kind.
+#ifndef TOKEN
+#define TOKEN(name)
+#endif
+
+/// KEYWORD(kw)
+///   Expands by default for every keyword, such as
+///   'if', 'else', etc.
+#ifndef KEYWORD
+#define KEYWORD(kw) TOKEN(kw_##kw)
+#endif
+
+/// DECL_KEYWORD(kw)
+///   Expands for every keyword that can be used in a declaration.
+#ifndef DECL_KEYWORD
+#define DECL_KEYWORD(kw) KEYWORD(kw)
+#endif
+
+/// STMT_KEYWORD(kw)
+///   Expands for every keyword used in statement grammar.
+#ifndef STMT_KEYWORD
+#define STMT_KEYWORD(kw) KEYWORD(kw)
+#endif
+
+/// EXPR_KEYWORD(kw)
+///   Expands for every keyword used in an expression, such as 'true' and
+///   'false'
+#ifndef EXPR_KEYWORD
+#define EXPR_KEYWORD(kw) KEYWORD(kw)
+#endif
+
+/// PUNCTUATOR(name, str)
+///   Expands for every punctuator.
+///   \param name  The symbolic name of the punctuator, such as
+///                'l_paren' or 'arrow'.
+///   \param str   A string literal containing the spelling of the punctuator,
+///                such as '"("' or '"->"'.
+#ifndef PUNCTUATOR
+#define PUNCTUATOR(name, str) TOKEN(name)
+#endif
+
+/// LITERAL(name)
+///   Tokens representing literal values, e.g. 'integer_literal'.
+#ifndef LITERAL
+#define LITERAL(name) TOKEN(name)
+#endif
+
+/// MISC(name)
+///   Miscellaneous tokens, e.g. 'eof' and 'unknown'.
+#ifndef MISC
+#define MISC(name) TOKEN(name)
+#endif
+
+DECL_KEYWORD(def)
+DECL_KEYWORD(extern)
+LITERAL(floating_literal)
+PUNCTUATOR(l_paren, "(")
+PUNCTUATOR(r_paren, ")")
+PUNCTUATOR(equal, "=")
+MISC(identifier)
+MISC(eof)
+MISC(unknown)
+
+#undef TOKEN
+#undef KEYWORD
+#undef DECL_KEYWORD
+#undef STMT_KEYWORD
+#undef EXPR_KEYWORD
+#undef PUNCTUATOR
+#undef LITERAL
+#undef MISC
