@@ -11,16 +11,9 @@ using namespace llvm;
 
 static StringRef getTokenTextInternal(tok Kind) {
   switch (Kind) {
-    case tok::kw_def:
-      return "def";
-    case tok::kw_extern:
-      return "extern";
-    case tok::l_paren:
-      return "(";
-    case tok::r_paren:
-      return ")";
-    case tok::equal:
-      return "=";
+#define PUNCTUATOR(name, str) case tok::name: return str;
+#define KEYWORD(name) case tok::kw_##name: return #name;
+#include "kaleidoscope/TokenKinds.def"
     default:
       return StringRef();
   }

@@ -6,8 +6,9 @@ message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 add_definitions(${LLVM_DEFINITIONS})
 
 add_library(kaleidoscope
-        SyntaxKind.cpp
-        Lexer.cpp)
+            SyntaxKind.cpp
+            Lexer.cpp
+            SourceManager.cpp)
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use
